@@ -1,8 +1,10 @@
 spring:
   application:
     name: API-GATEWAY
+  main:    allow-bean-definition-overriding: true
   cloud:
     gateway:
+      default-filters:      - TokenRelay=      
       metrics:
         enabled: true
       discovery:
@@ -22,8 +24,26 @@ spring:
           uri: lb://SHOPPING-CART-SERVICE
           predicates:
             - Path=/api/cart/**
+            
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/auth/realms/product_service
+        registration:
+          spring-gateway:
+            authorization-grant-type: authorization_code
+            client-id: spring-gateway
+            client-secret: 8baaec35-2fae-42ff-a0d2-335aefdf6c5a
+            provider: keycloak
+            redirect-uri: http://localhost:8080/login/oauth2/code/spring-gateway
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8180/auth/realms/product_service/protocol/openid-connect/certs
+
 server:
-  port: 80
+  port: 8080
   
 eureka:
   client:
