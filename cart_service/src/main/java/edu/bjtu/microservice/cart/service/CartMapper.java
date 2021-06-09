@@ -1,5 +1,6 @@
 package edu.bjtu.microservice.cart.service;
 
+import edu.bjtu.microservice.cart.controller.dto.CartDTO;
 import edu.bjtu.microservice.cart.controller.dto.ItemDTO;
 import edu.bjtu.microservice.cart.controller.dto.RequestDTO;
 import edu.bjtu.microservice.cart.controller.dto.ResponseDTO;
@@ -17,11 +18,11 @@ public interface CartMapper {
 	CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
 	
     @Mapping(source = "userId", target = "user.id")
-    Cart toModel(RequestDTO dto);
+    Cart toModel(CartDTO dto);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.name", target = "userName")
-    ResponseDTO toResponseDTO(Cart model);
+    CartDTO toResponseDTO(Cart model);
 
     @Mapping(source = "productId", target = "product.id")
     @Mapping(source = "productName", target = "product.name")

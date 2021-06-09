@@ -1,5 +1,7 @@
 package edu.bjtu.microservice.product.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
-    @Autowired
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+
+	@Autowired
     private ProductService productService;
 
     @GetMapping("/product")
     public List<Product> index() {
+		LOGGER.info("Get a list of products.");
+
         List<Product> res = productService.getProducts();
         return res;
     }
@@ -28,6 +34,8 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public Product view(@PathVariable("id") long id){
+		LOGGER.info("Get a product with its productid.");
+
         Product p = productService.getProduct(id).get();
         return p;
     }

@@ -24,7 +24,8 @@ spring:
           uri: lb://SHOPPING-CART-SERVICE
           predicates:
             - Path=/api/cart/**
-            
+  zipkin:
+    enabled: false
   security:
     oauth2:
       client:

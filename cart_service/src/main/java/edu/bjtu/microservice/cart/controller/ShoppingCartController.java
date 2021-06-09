@@ -1,9 +1,7 @@
 package edu.bjtu.microservice.cart.controller;
 
+import edu.bjtu.microservice.cart.controller.dto.CartDTO;
 import edu.bjtu.microservice.cart.controller.dto.RequestDTO;
-import edu.bjtu.microservice.cart.controller.dto.ResponseDTO;
-import edu.bjtu.microservice.cart.domain.Cart;
-import edu.bjtu.microservice.cart.service.CartMapper;
 import edu.bjtu.microservice.cart.service.ShoppingCartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,19 +21,19 @@ public class ShoppingCartController {
     private ShoppingCartService service;
     //private CartMapper mapper;
 
-    @PostMapping
-    public ResponseEntity<ResponseDTO> submit(@RequestBody RequestDTO requestDTO) {
-        //Cart cart = CartMapper.INSTANCE.toModel(requestDTO);
-        
-        var cart = service.purchase2(requestDTO);
-        //ResponseDTO responseDTO = CartMapper.INSTANCE.toResponseDTO(cart);
-        ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setId(cart.getId());
-        responseDTO.setUserId(cart.getUser().getId());
-        responseDTO.setUserName(cart.getUser().getName());
-        responseDTO.setTotalPrice(cart.getTotalPrice());
-        responseDTO.setItems(cart.getItems());
-        return ResponseEntity.created(URI.create(responseDTO.getId())).body(responseDTO);
+	   @PostMapping
+	    public ResponseEntity<CartDTO> submit(@RequestBody RequestDTO requestDTO) {
+	        //Cart cart = CartMapper.INSTANCE.toModel(requestDTO);
+	        
+	        var cart = service.getCartItems(requestDTO);
+	        //ResponseDTO responseDTO = CartMapper.INSTANCE.toResponseDTO(cart);
+	        CartDTO cartDTO = new CartDTO();
+	        cartDTO.setId(cart.getId());
+	        cartDTO.setUserId(cart.getUser().getId());
+	        cartDTO.setUserName(cart.getUser().getName());
+	        cartDTO.setTotalPrice(cart.getTotalPrice());
+	        cartDTO.setItems(cart.getItems());
+	        return ResponseEntity.created(URI.create(cartDTO.getId())).body(cartDTO);
     }
 
 }

@@ -1,12 +1,9 @@
 spring:
   application:
-    name: SHOPPING-CART-SERVICE
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8180/auth/realms/product_service
-  zipkin:    base-url: http://127.0.0.1:9411/
+    name: EVENT-PROCESSOR
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+    #enabled: false
   kafka:
     producer:
       bootstrap-servers: localhost:9092
@@ -29,14 +26,4 @@ spring:
       order: orderTopic
 
 server:
-  port: 8081
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    hostname: localhost
-    prefer-ip-address: true
+  port: 8086
